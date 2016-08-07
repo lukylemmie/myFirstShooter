@@ -11,9 +11,11 @@ import java.awt.geom.AffineTransform;
  * @author Andrew Lem
  */
 public abstract class GameObject {
+    public static final double DIRECTION_CORRECTION = Math.toRadians(90);
     protected double x;
     protected double y;
     protected Sprite sprite;
+    protected double speed;
     protected double dx;
     protected double dy;
     protected Game game;
@@ -91,5 +93,25 @@ public abstract class GameObject {
             offScreen = true;
         }
         return offScreen;
+    }
+
+    public void turnToLookAt(int pX, int pY){
+        double deltaX = pX - x;
+        double deltaY = pY - y;
+
+        direction = Math.atan2(deltaY, deltaX) + DIRECTION_CORRECTION;
+    }
+
+    public double getDirection() {
+        return direction;
+    }
+
+    public void setDirection(double direction) {
+        this.direction = direction;
+    }
+
+    public void recalcVelocity(){
+        dx = speed * Math.cos(direction + DIRECTION_CORRECTION);
+        dy = speed * Math.sin(direction + DIRECTION_CORRECTION);
     }
 }

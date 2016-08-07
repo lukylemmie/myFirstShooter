@@ -6,15 +6,15 @@ import core.gameLogic.Game;
  * @author Andrew Lem
  */
 public class GOPlayer extends GameObject {
-    public static final String SPRITES_SHIP_GIF = "sprites/ship.gif";
+    public static final String SPRITES_SHIP_GIF = "sprites/player.gif";
     public static final int DEFAULT_SHIP_MOVE_SPEED = 300;
     public static final int DEFAULT_FIRING_INTERVAL = 100;
-    private double moveSpeed = DEFAULT_SHIP_MOVE_SPEED;
     private long lastFireTime = 0;
     private long firingInterval = DEFAULT_FIRING_INTERVAL;
 
     public GOPlayer(Game game, int x, int y) {
         super(game, SPRITES_SHIP_GIF, x, y);
+        speed = DEFAULT_SHIP_MOVE_SPEED;
     }
 
     public void move(long delta) {
@@ -37,11 +37,11 @@ public class GOPlayer extends GameObject {
     }
 
     public void moveLeft(){
-        setHorizontalMovement(-moveSpeed);
+        setHorizontalMovement(-speed);
     }
 
     public void moveRight() {
-        setHorizontalMovement(moveSpeed);
+        setHorizontalMovement(speed);
     }
 
     public void tryToFire() {
@@ -51,14 +51,11 @@ public class GOPlayer extends GameObject {
         }
 
         lastFireTime = System.currentTimeMillis();
-        GOBullet bullet = new GOBullet(game, getX() + getImageWidth()/2, getY());
+        GOBullet bullet = new GOBullet(game, getX() + getImageWidth()/2, getY() + getImageWidth()/2);
         bullet.adjustX(-bullet.getImageWidth()/2);
-        bullet.adjustY(-bullet.getImageHeight());
+        bullet.adjustY(-bullet.getImageHeight()/2);
+        bullet.setDirection(direction);
+        bullet.recalcVelocity();
         game.addBullet(bullet);
-    }
-
-    public void turnToLookAt(int pX, int pY){
-        double deltaX = pX - x;
-        double deltaY = pY - y;
     }
 }

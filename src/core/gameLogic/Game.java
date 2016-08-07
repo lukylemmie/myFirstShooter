@@ -25,8 +25,8 @@ public class Game {
     private GOPlayer player;
     private UserInput userInput;
     private GameView gameView;
-    private boolean mouseControls = true;
-    private boolean keyboardControls = false;
+    private boolean mouseControls = false;
+    private boolean keyboardControls = true;
 
     public Game() {
         userInput = new UserInput(this);
@@ -118,6 +118,8 @@ public class Game {
                 player.tryToFire();
             }
         }
+
+        player.turnToLookAt(userInput.getMouseX(), userInput.getMouseY());
     }
 
     private void checkForCollisions() {

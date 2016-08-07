@@ -11,14 +11,14 @@ public class GOEnemy extends GameObject {
     public static final int DEFAULT_ENEMY_MOVE_SPEED = 75;
     public static final double DEFAULT_ENEMY_MOVE_SPEED_INCREASE = 1.03;
 
-    private double moveSpeed = DEFAULT_ENEMY_MOVE_SPEED;
     private EnemyFormation enemyFormation;
     private int hp = 1;
 
     public GOEnemy(Game game, int x, int y, EnemyFormation enemyFormation) {
         super(game, SPRITES_ENEMY_GIF, x, y);
 
-        dx = -moveSpeed;
+        speed = DEFAULT_ENEMY_MOVE_SPEED;
+        dx = -speed;
         this.enemyFormation = enemyFormation;
     }
 
