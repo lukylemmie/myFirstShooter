@@ -7,7 +7,7 @@ import core.gameLogic.Game;
  */
 public class GOBullet extends GameObject {
     public static final int DEFAULT_BULLET_MOVE_SPEED = -300;
-    public static final String SPRITES_BULLET_GIF = "core/sprites/bullet.gif";
+    public static final String SPRITES_BULLET_GIF = "sprites/bullet.gif";
     private double moveSpeed = DEFAULT_BULLET_MOVE_SPEED;
     private int uses = 1;
 

@@ -73,12 +73,12 @@ public class GameView extends Canvas {
 
 
 
-    public void drawGameObjects(GOPlayer ship, ArrayList<GOEnemy> enemies, ArrayList<GOBullet> bullets) {
+    public void drawGameObjects(GOPlayer player, ArrayList<GOEnemy> enemies, ArrayList<GOBullet> bullets) {
         Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
         g.setColor(Color.black);
         g.fillRect(0, 0, Game.MAX_X, Game.MAX_Y);
 
-        ship.draw(g);
+        player.draw(g);
         for (GOEnemy enemy : enemies){
             enemy.draw(g);
         }

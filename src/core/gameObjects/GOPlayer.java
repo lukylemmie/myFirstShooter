@@ -6,7 +6,7 @@ import core.gameLogic.Game;
  * @author Andrew Lem
  */
 public class GOPlayer extends GameObject {
-    public static final String SPRITES_SHIP_GIF = "core/sprites/ship.gif";
+    public static final String SPRITES_SHIP_GIF = "sprites/ship.gif";
     public static final int DEFAULT_SHIP_MOVE_SPEED = 300;
     public static final int DEFAULT_FIRING_INTERVAL = 100;
     private double moveSpeed = DEFAULT_SHIP_MOVE_SPEED;
@@ -55,5 +55,10 @@ public class GOPlayer extends GameObject {
         bullet.adjustX(-bullet.getImageWidth()/2);
         bullet.adjustY(-bullet.getImageHeight());
         game.addBullet(bullet);
+    }
+
+    public void turnToLookAt(int pX, int pY){
+        double deltaX = pX - x;
+        double deltaY = pY - y;
     }
 }

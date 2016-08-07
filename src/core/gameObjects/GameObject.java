@@ -5,6 +5,7 @@ import core.sprites.Sprite;
 import core.sprites.SpriteStore;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 /**
  * @author Andrew Lem
@@ -53,8 +54,11 @@ public abstract class GameObject {
         this.dy = dy;
     }
 
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
+        AffineTransform gameDirection = g.getTransform();
+        g.rotate(direction, x + sprite.getWidth()/2, y + sprite.getHeight()/2);
         sprite.draw(g, (int) x, (int) y);
+        g.setTransform(gameDirection);
     }
 
     public boolean collidesWith(GameObject other) {

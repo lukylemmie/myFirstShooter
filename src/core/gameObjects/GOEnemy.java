@@ -7,7 +7,7 @@ import core.gameLogic.Game;
  * @author Andrew Lem
  */
 public class GOEnemy extends GameObject {
-    public static final String SPRITES_ENEMY_GIF = "core/sprites/enemy.gif";
+    public static final String SPRITES_ENEMY_GIF = "sprites/enemy.gif";
     public static final int DEFAULT_ENEMY_MOVE_SPEED = 75;
     public static final double DEFAULT_ENEMY_MOVE_SPEED_INCREASE = 1.03;
 

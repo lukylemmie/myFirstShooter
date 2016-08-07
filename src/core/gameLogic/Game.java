@@ -22,7 +22,7 @@ public class Game {
     private ArrayList<GOBullet> bullets = new ArrayList<>();
     private ArrayList<GOBullet> removeBullets = new ArrayList<>();
     private EnemyFormation enemyFormation;
-    private GOPlayer ship;
+    private GOPlayer player;
     private UserInput userInput;
     private GameView gameView;
     private boolean mouseControls = true;
@@ -42,7 +42,7 @@ public class Game {
         enemies.clear();
         bullets.clear();
 
-        ship = new GOPlayer(this, MAX_X / 2, MAX_Y - SCREEN_EDGE_INNER_BUFFER);
+        player = new GOPlayer(this, MAX_X / 2, MAX_Y - SCREEN_EDGE_INNER_BUFFER);
         enemyFormation = new EnemyFormation(this, 1);
     }
 
@@ -56,7 +56,7 @@ public class Game {
     public void gameLoop() {
         while (gameRunning) {
             moveGameObjects();
-            gameView.drawGameObjects(ship, enemies, bullets);
+            gameView.drawGameObjects(player, enemies, bullets);
             checkForCollisions();
             processUserInput();
             sleepForFPS();
@@ -68,7 +68,7 @@ public class Game {
         lastLoopTime = System.currentTimeMillis();
 
         if (!userInput.isWaitingForKeyPress()) {
-            ship.move(delta);
+            player.move(delta);
             for (GOEnemy enemy : enemies) {
                 enemy.move(delta);
             }
@@ -91,31 +91,31 @@ public class Game {
     }
 
     private void processUserInput() {
-        ship.moveStop();
+        player.moveStop();
 
         if (mouseControls) {
-            if (userInput.getMouseX() < ship.getX() - 1) {
-                ship.moveLeft();
-            } else if (userInput.getMouseX() > ship.getX() + 1) {
-                ship.moveRight();
+            if (userInput.getMouseX() < player.getX() - 1) {
+                player.moveLeft();
+            } else if (userInput.getMouseX() > player.getX() + 1) {
+                player.moveRight();
             }
 
             // if we're pressing fire, attempt to fire
             if (userInput.isMouseClick()) {
-                ship.tryToFire();
+                player.tryToFire();
             }
         }
 
         if (keyboardControls) {
             if ((userInput.isLeftPressed()) && (!userInput.isRightPressed())) {
-                ship.moveLeft();
+                player.moveLeft();
             } else if ((userInput.isRightPressed()) && (!userInput.isLeftPressed())) {
-                ship.moveRight();
+                player.moveRight();
             }
 
             // if we're pressing fire, attempt to fire
             if (userInput.isFirePressed()) {
-                ship.tryToFire();
+                player.tryToFire();
             }
         }
     }
@@ -138,7 +138,7 @@ public class Game {
                 }
             }
 
-            if(ship.collidesWith(enemy)) {
+            if(player.collidesWith(enemy)) {
                 notifyDeath();
             }
         }
