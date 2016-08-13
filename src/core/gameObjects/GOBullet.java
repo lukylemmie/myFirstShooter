@@ -22,9 +22,8 @@ public class GOBullet extends GameObject {
         super(game, SPRITES_NEUTRAL_BULLET_GIF, x, y);
         if (owner instanceof LOPlayer){
             sprite = SpriteStore.get().getSprite(SPRITES_PLAYER_BULLET_GIF);
-        } else if (owner instanceof EFormation) {
+        } else if (owner instanceof LOEnemy) {
             sprite = SpriteStore.get().getSprite(SPRITES_ENEMY_BULLET_GIF);
-
         }
 
         speed = DEFAULT_BULLET_MOVE_SPEED;
