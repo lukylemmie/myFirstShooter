@@ -43,9 +43,15 @@ public class Game {
         bullets.clear();
 
         player = new LOPlayer(this, MAX_X / 2, MAX_Y / 2);
-        LOEnemy enemy = new EChaser(this, SCREEN_EDGE_INNER_BUFFER, SCREEN_EDGE_INNER_BUFFER, 1);
+        LOEnemy enemy1 = new EChaser(this, -SCREEN_EDGE_OUTER_BUFFER, -SCREEN_EDGE_OUTER_BUFFER, 1);
+        LOEnemy enemy2 = new EChaser(this, MAX_X + SCREEN_EDGE_OUTER_BUFFER, -SCREEN_EDGE_OUTER_BUFFER, 1);
+        LOEnemy enemy3 = new EChaser(this, -SCREEN_EDGE_OUTER_BUFFER, MAX_Y + SCREEN_EDGE_OUTER_BUFFER, 1);
+        LOEnemy enemy4 = new EChaser(this, MAX_X + SCREEN_EDGE_OUTER_BUFFER, MAX_Y + SCREEN_EDGE_OUTER_BUFFER, 1);
 
-        enemies.add(enemy);
+        enemies.add(enemy1);
+        enemies.add(enemy2);
+        enemies.add(enemy3);
+        enemies.add(enemy4);
     }
 
 

@@ -19,17 +19,11 @@ public class LOPlayer extends GOLiveObject {
     }
 
     public void move(long delta) {
-        if ((dx < 0) && (x < Game.SCREEN_EDGE_INNER_BUFFER)) {
-            return;
+        if (((dx < 0) && (x < Game.SCREEN_EDGE_INNER_BUFFER)) || ((dx > 0) && (x > Game.MAX_X - Game.SCREEN_EDGE_INNER_BUFFER))) {
+            dx = 0;
         }
-        if ((dx > 0) && (x > Game.MAX_X - Game.SCREEN_EDGE_INNER_BUFFER)) {
-            return;
-        }
-        if ((dy < 0) && (y < Game.SCREEN_EDGE_INNER_BUFFER)) {
-            return;
-        }
-        if ((dy > 0) && (y > Game.MAX_Y - Game.SCREEN_EDGE_INNER_BUFFER)) {
-            return;
+        if (((dy < 0) && (y < Game.SCREEN_EDGE_INNER_BUFFER)) || ((dy > 0) && (y > Game.MAX_Y - Game.SCREEN_EDGE_INNER_BUFFER))) {
+            dy = 0;
         }
 
         super.move(delta);
