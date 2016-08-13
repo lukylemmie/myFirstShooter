@@ -1,6 +1,7 @@
-package core.gameObjects.LiveObjects;
+package core.gameObjects.LiveObjects.EnemyObjects;
 
 import core.gameLogic.Game;
+import core.gameObjects.LiveObjects.LOEnemy;
 
 /**
  * Created by Andrew on 13/08/2016.

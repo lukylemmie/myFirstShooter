@@ -1,7 +1,6 @@
 package core.gameLogic;
 
 import core.gameObjects.GOBullet;
-import core.gameObjects.LiveObjects.EFormation;
 import core.gameObjects.LiveObjects.LOEnemy;
 import core.gameObjects.LiveObjects.LOPlayer;
 

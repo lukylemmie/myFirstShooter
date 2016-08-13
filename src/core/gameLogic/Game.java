@@ -1,8 +1,9 @@
 package core.gameLogic;
 
 import core.gameObjects.GOBullet;
-import core.gameObjects.LiveObjects.EChaser;
-import core.gameObjects.LiveObjects.EFormation;
+import core.gameObjects.LiveObjects.EnemyObjects.EChaser;
+import core.gameObjects.LiveObjects.EnemyObjects.EFormation;
+import core.gameObjects.LiveObjects.EnemyObjects.EShooter;
 import core.gameObjects.LiveObjects.LOEnemy;
 import core.gameObjects.LiveObjects.LOPlayer;
 
@@ -52,6 +53,16 @@ public class Game {
         enemies.add(enemy2);
         enemies.add(enemy3);
         enemies.add(enemy4);
+
+        enemy1 = new EShooter(this, SCREEN_EDGE_INNER_BUFFER, SCREEN_EDGE_INNER_BUFFER, 1);
+        enemy2 = new EShooter(this, MAX_X - SCREEN_EDGE_INNER_BUFFER, SCREEN_EDGE_INNER_BUFFER, 1);
+        enemy3 = new EShooter(this, SCREEN_EDGE_INNER_BUFFER, MAX_Y - SCREEN_EDGE_INNER_BUFFER, 1);
+        enemy4 = new EShooter(this, MAX_X - SCREEN_EDGE_INNER_BUFFER, MAX_Y - SCREEN_EDGE_INNER_BUFFER, 1);
+
+        enemies.add(enemy1);
+        enemies.add(enemy2);
+        enemies.add(enemy3);
+        enemies.add(enemy4);
     }
 
 
@@ -63,7 +74,7 @@ public class Game {
 
     public void gameLoop() {
         while (gameRunning) {
-            processEnemyMovement();
+            processEnemyAction();
             moveGameObjects();
             gameView.drawGameObjects(player, enemies, bullets);
             checkForCollisions();
@@ -72,10 +83,13 @@ public class Game {
         }
     }
 
-    private void processEnemyMovement() {
+    private void processEnemyAction() {
         for (LOEnemy enemy : enemies){
             if (enemy instanceof EChaser){
                 ((EChaser) enemy).goTo(player.getX(), player.getY());
+            }
+            if (enemy instanceof EShooter){
+                ((EShooter) enemy).shootAt(player.getX(), player.getY());
             }
         }
     }
@@ -127,10 +141,8 @@ public class Game {
                 if (bullet.collidesWith(enemy)) {
                     bullet.bulletHits(enemy);
                 }
-                if (enemy.isDead()){
-                    if (!removeEnemies.contains(enemy)) {
-                        removeEnemies.add(enemy);
-                    }
+                if (bullet.collidesWith(player)){
+                    bullet.bulletHits(player);
                 }
                 if (bullet.isUsed()){
                     if (!removeBullets.contains(bullet)) {
@@ -141,9 +153,15 @@ public class Game {
 
             if(player.collidesWith(enemy)) {
                 player.takeDamage(1);
-                if (player.isDead()) {
-                    notifyDeath();
+                enemy.takeDamage(1);
+            }
+            if (enemy.isDead()){
+                if (!removeEnemies.contains(enemy)) {
+                    removeEnemies.add(enemy);
                 }
+            }
+            if (player.isDead()){
+                notifyDeath();
             }
         }
 

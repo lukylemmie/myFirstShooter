@@ -9,8 +9,8 @@ public abstract class GOLiveObject extends GameObject {
     public static final int DEFAULT_ACTION_INTERVAL = 200;
 
     protected int hp;
-    private long lastActionTime = 0;
-    private long actionInterval = DEFAULT_ACTION_INTERVAL;
+    protected long lastActionTime = 0;
+    protected long actionInterval = DEFAULT_ACTION_INTERVAL;
 
     public GOLiveObject(Game game, String ref, int x, int y, int hp) {
         super(game, ref, x, y);

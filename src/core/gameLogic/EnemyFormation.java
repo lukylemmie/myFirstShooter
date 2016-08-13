@@ -1,6 +1,6 @@
 package core.gameLogic;
 
-import core.gameObjects.LiveObjects.EFormation;
+import core.gameObjects.LiveObjects.EnemyObjects.EFormation;
 
 import java.util.ArrayList;
 

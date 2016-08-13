@@ -1,7 +1,8 @@
 package core.gameObjects;
 
 import core.gameLogic.Game;
-import core.gameObjects.LiveObjects.EFormation;
+import core.gameObjects.LiveObjects.EnemyObjects.EFormation;
+import core.gameObjects.LiveObjects.LOEnemy;
 import core.gameObjects.LiveObjects.LOPlayer;
 import core.sprites.SpriteStore;
 
@@ -30,7 +31,17 @@ public class GOBullet extends GameObject {
         this.owner = owner;
     }
 
+    @Override
+    public boolean collidesWith(GameObject other) {
+        if ((other instanceof LOEnemy && owner instanceof LOEnemy) || (other instanceof LOPlayer && owner instanceof LOPlayer)){
+            return false;
+        } else {
+            return super.collidesWith(other);
+        }
+    }
+
     public void bulletHits(GOLiveObject target){
+
         // prevents double kills, if we've already hit something, don't collide
         if (!isUsed()) {
             target.takeDamage(1);
