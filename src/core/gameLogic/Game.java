@@ -14,6 +14,7 @@ public class Game {
     public static final int MAX_Y = 600;
     public static final int SCREEN_EDGE_INNER_BUFFER = 50;
     public static final int SCREEN_EDGE_OUTER_BUFFER = 100;
+    public static final int MOVEMENT_BUFFER = 1;
 
     private boolean gameRunning = true;
     private long lastLoopTime = System.currentTimeMillis();
@@ -91,13 +92,23 @@ public class Game {
     }
 
     private void processUserInput() {
-        player.moveStop();
+        player.moveStopHorizontal();
 
         if (mouseControls) {
-            if (userInput.getMouseX() < player.getX() - 1) {
+            if (userInput.getMouseX() - (player.getX() + player.getImageWidth()/2) < -MOVEMENT_BUFFER) {
                 player.moveLeft();
-            } else if (userInput.getMouseX() > player.getX() + 1) {
+            } else if (userInput.getMouseX() - (player.getX() + player.getImageWidth()/2) > MOVEMENT_BUFFER) {
                 player.moveRight();
+            } else {
+                player.moveStopHorizontal();
+            }
+
+            if (userInput.getMouseY() - (player.getY() + player.getImageHeight()/2) < -MOVEMENT_BUFFER){
+                player.moveUp();
+            } else if (userInput.getMouseY() - (player.getY() + player.getImageHeight()/2) > MOVEMENT_BUFFER){
+                player.moveDown();
+            } else {
+                player.moveStopVertical();
             }
 
             if (userInput.isFirePressed() || userInput.isMouseClick()) {
@@ -110,6 +121,11 @@ public class Game {
                 player.moveLeft();
             } else if ((userInput.isRightPressed()) && (!userInput.isLeftPressed())) {
                 player.moveRight();
+            }
+            if ((userInput.isUpPressed()) && (!userInput.isDownPressed())){
+                player.moveUp();
+            } else if ((userInput.isDownPressed()) && (!userInput.isUpPressed())){
+                player.moveDown();
             }
 
             if (userInput.isFirePressed() || userInput.isMouseClick()) {

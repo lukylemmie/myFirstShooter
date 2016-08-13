@@ -96,10 +96,12 @@ public abstract class GameObject {
     }
 
     public void turnToLookAt(int pX, int pY){
-        double deltaX = pX - x;
-        double deltaY = pY - y;
+        double deltaX = pX - (x + getImageWidth()/2);
+        double deltaY = pY - (y + getImageHeight()/2);
 
-        bearing = Math.atan2(deltaY, deltaX) + DIRECTION_CORRECTION;
+        if (Math.abs(deltaX) > 1 && Math.abs(deltaY) > 1) {
+            bearing = Math.atan2(deltaY, deltaX) + DIRECTION_CORRECTION;
+        }
     }
 
     public double getBearing() {

@@ -32,8 +32,20 @@ public class GOPlayer extends GameObject {
         super.move(delta);
     }
 
-    public void moveStop(){
+    public void moveStopHorizontal(){
         setHorizontalMovement(0);
+    }
+
+    public void moveStopVertical(){
+        setVerticalMovement(0);
+    }
+
+    public void moveUp(){
+        setVerticalMovement(-speed);
+    }
+
+    public void moveDown() {
+        setVerticalMovement(speed);
     }
 
     public void moveLeft(){
