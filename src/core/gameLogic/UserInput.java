@@ -10,6 +10,8 @@ import java.awt.event.MouseEvent;
  */
 public class UserInput {
     private boolean waitingForKeyPress = true;
+    private boolean upPressed = false;
+    private boolean downPressed = false;
     private boolean leftPressed = false;
     private boolean rightPressed = false;
     private boolean firePressed = false;
@@ -50,6 +52,14 @@ public class UserInput {
         return mouseInputHandler;
     }
 
+    public boolean isUpPressed() {
+        return upPressed;
+    }
+
+    public boolean isDownPressed() {
+        return downPressed;
+    }
+
     public boolean isLeftPressed() {
         return leftPressed;
     }
@@ -87,10 +97,18 @@ public class UserInput {
                 return;
             }
 
-            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W){
+                upPressed = true;
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S){
+                downPressed = true;
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
                 leftPressed = true;
             }
-            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
                 rightPressed = true;
             }
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
@@ -103,10 +121,10 @@ public class UserInput {
                 return;
             }
 
-            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            if (e.getKeyCode() == KeyEvent.VK_A) {
                 leftPressed = false;
             }
-            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            if (e.getKeyCode() == KeyEvent.VK_D) {
                 rightPressed = false;
             }
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {

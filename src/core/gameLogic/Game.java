@@ -100,8 +100,7 @@ public class Game {
                 player.moveRight();
             }
 
-            // if we're pressing fire, attempt to fire
-            if (userInput.isMouseClick()) {
+            if (userInput.isFirePressed() || userInput.isMouseClick()) {
                 player.tryToFire();
             }
         }
@@ -113,8 +112,7 @@ public class Game {
                 player.moveRight();
             }
 
-            // if we're pressing fire, attempt to fire
-            if (userInput.isFirePressed()) {
+            if (userInput.isFirePressed() || userInput.isMouseClick()) {
                 player.tryToFire();
             }
         }
