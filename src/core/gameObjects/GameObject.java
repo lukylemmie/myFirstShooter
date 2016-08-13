@@ -113,7 +113,19 @@ public abstract class GameObject {
     }
 
     public void calcVelocity(){
-        dx = speed * Math.cos(bearing + DIRECTION_CORRECTION);
-        dy = speed * Math.sin(bearing + DIRECTION_CORRECTION);
+        dx = speed * -Math.cos(bearing + DIRECTION_CORRECTION);
+        dy = speed * -Math.sin(bearing + DIRECTION_CORRECTION);
+    }
+
+    public double distanceTo(double pX, double pY){
+        double deltaX = pX - (x + getImageWidth()/2);
+        double deltaY = pY - (y + getImageHeight()/2);
+
+        return Math.sqrt(Math.pow(deltaX, 2)  + Math.pow(deltaY, 2));
+    }
+
+    public void stopMoving(){
+        dx = 0;
+        dy = 0;
     }
 }

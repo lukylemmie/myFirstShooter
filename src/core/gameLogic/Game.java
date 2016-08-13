@@ -92,48 +92,17 @@ public class Game {
     }
 
     private void processUserInput() {
-        player.moveStopHorizontal();
-
-        if (mouseControls) {
-            if (userInput.getMouseX() - (player.getX() + player.getImageWidth()/2) < -MOVEMENT_BUFFER) {
-                player.moveLeft();
-            } else if (userInput.getMouseX() - (player.getX() + player.getImageWidth()/2) > MOVEMENT_BUFFER) {
-                player.moveRight();
-            } else {
-                player.moveStopHorizontal();
-            }
-
-            if (userInput.getMouseY() - (player.getY() + player.getImageHeight()/2) < -MOVEMENT_BUFFER){
-                player.moveUp();
-            } else if (userInput.getMouseY() - (player.getY() + player.getImageHeight()/2) > MOVEMENT_BUFFER){
-                player.moveDown();
-            } else {
-                player.moveStopVertical();
-            }
-
-            if (userInput.isFirePressed() || userInput.isMouseClick()) {
-                player.tryToFire();
-            }
-        }
-
-        if (keyboardControls) {
-            if ((userInput.isLeftPressed()) && (!userInput.isRightPressed())) {
-                player.moveLeft();
-            } else if ((userInput.isRightPressed()) && (!userInput.isLeftPressed())) {
-                player.moveRight();
-            }
-            if ((userInput.isUpPressed()) && (!userInput.isDownPressed())){
-                player.moveUp();
-            } else if ((userInput.isDownPressed()) && (!userInput.isUpPressed())){
-                player.moveDown();
-            }
-
-            if (userInput.isFirePressed() || userInput.isMouseClick()) {
-                player.tryToFire();
-            }
-        }
-
         player.turnToLookAt(userInput.getMouseX(), userInput.getMouseY());
+
+        if (player.distanceTo(userInput.getMouseX(), userInput.getMouseY()) > MOVEMENT_BUFFER){
+            player.calcVelocity();
+        } else {
+            player.stopMoving();
+        }
+
+        if (userInput.isMouseClick()){
+            player.tryToFire();
+        }
     }
 
     private void checkForCollisions() {
