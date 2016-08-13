@@ -12,7 +12,9 @@ public abstract class LOEnemy extends GOLiveObject {
     public static final int DEFAULT_ENEMY_HP = 1;
 
 
-    public LOEnemy(Game game, String ref, int x, int y, int hp) {
-        super(game, ref, x, y, hp);
+    public LOEnemy(Game game, int x, int y, int hp) {
+        super(game, SPRITES_ENEMY_GIF, x, y, hp);
+
+        speed = DEFAULT_ENEMY_MOVE_SPEED;
     }
 }

@@ -10,7 +10,7 @@ import core.gameObjects.GOLiveObject;
 public class LOPlayer extends GOLiveObject {
     public static final String SPRITES_SHIP_GIF = "sprites/player.gif";
     public static final int DEFAULT_SHIP_MOVE_SPEED = 100;
-    public static final int DEFAULT_PLAYER_HP = 1;
+    public static final int DEFAULT_PLAYER_HP = 3;
 
     public LOPlayer(Game game, int x, int y) {
         super(game, SPRITES_SHIP_GIF, x, y, DEFAULT_PLAYER_HP);

@@ -62,14 +62,14 @@ public abstract class GameObject {
 
     public void draw(Graphics2D g) {
         AffineTransform gameDirection = g.getTransform();
-        g.rotate(bearing, x + sprite.getWidth()/2, y + sprite.getHeight()/2);
+        g.rotate(bearing, x, y);
         sprite.draw(g, (int) x, (int) y);
         g.setTransform(gameDirection);
     }
 
     public boolean collidesWith(GameObject other) {
-        me.setBounds((int) x, (int) y, sprite.getWidth(), sprite.getHeight());
-        him.setBounds((int) other.x, (int) other.y, other.sprite.getWidth(), other.sprite.getHeight());
+        me.setBounds((int) x - getImageWidth()/2, (int) y - getImageHeight()/2, sprite.getWidth(), sprite.getHeight());
+        him.setBounds((int) other.x - getImageWidth()/2, (int) other.y - getImageHeight()/2, other.sprite.getWidth(), other.sprite.getHeight());
 
         return me.intersects(him);
     }
@@ -100,8 +100,8 @@ public abstract class GameObject {
     }
 
     public void turnToLookAt(int pX, int pY){
-        double deltaX = pX - (x + getImageWidth()/2);
-        double deltaY = pY - (y + getImageHeight()/2);
+        double deltaX = pX - x;
+        double deltaY = pY - y;
 
         if (Math.abs(deltaX) > 1 && Math.abs(deltaY) > 1) {
             bearing = Math.atan2(deltaX,-deltaY);
@@ -122,8 +122,8 @@ public abstract class GameObject {
     }
 
     public double distanceTo(double pX, double pY){
-        double deltaX = pX - (x + getImageWidth()/2);
-        double deltaY = pY - (y + getImageHeight()/2);
+        double deltaX = pX - x;
+        double deltaY = pY - y;
 
         return Math.sqrt(Math.pow(deltaX, 2)  + Math.pow(deltaY, 2));
     }

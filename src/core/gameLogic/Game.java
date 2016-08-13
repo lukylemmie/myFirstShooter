@@ -1,7 +1,9 @@
 package core.gameLogic;
 
 import core.gameObjects.GOBullet;
-import core.gameObjects.LiveObjects.LOFormationEnemy;
+import core.gameObjects.LiveObjects.EChaser;
+import core.gameObjects.LiveObjects.EFormation;
+import core.gameObjects.LiveObjects.LOEnemy;
 import core.gameObjects.LiveObjects.LOPlayer;
 
 import java.util.ArrayList;
@@ -18,8 +20,8 @@ public class Game {
 
     private boolean gameRunning = true;
     private long lastLoopTime = System.currentTimeMillis();
-    private ArrayList<LOFormationEnemy> enemies = new ArrayList<>();
-    private ArrayList<LOFormationEnemy> removeEnemies = new ArrayList<>();
+    private ArrayList<LOEnemy> enemies = new ArrayList<>();
+    private ArrayList<LOEnemy> removeEnemies = new ArrayList<>();
     private ArrayList<GOBullet> bullets = new ArrayList<>();
     private ArrayList<GOBullet> removeBullets = new ArrayList<>();
     private LOPlayer player;
@@ -41,6 +43,9 @@ public class Game {
         bullets.clear();
 
         player = new LOPlayer(this, MAX_X / 2, MAX_Y / 2);
+        LOEnemy enemy = new EChaser(this, SCREEN_EDGE_INNER_BUFFER, SCREEN_EDGE_INNER_BUFFER, 1);
+
+        enemies.add(enemy);
     }
 
 
@@ -52,11 +57,20 @@ public class Game {
 
     public void gameLoop() {
         while (gameRunning) {
+            processEnemyMovement();
             moveGameObjects();
             gameView.drawGameObjects(player, enemies, bullets);
             checkForCollisions();
             processUserInput();
             sleepForFPS();
+        }
+    }
+
+    private void processEnemyMovement() {
+        for (LOEnemy enemy : enemies){
+            if (enemy instanceof EChaser){
+                ((EChaser) enemy).goTo(player.getX(), player.getY());
+            }
         }
     }
 
@@ -66,7 +80,7 @@ public class Game {
 
         if (!userInput.isWaitingForKeyPress()) {
             player.move(delta);
-            for (LOFormationEnemy enemy : enemies) {
+            for (LOEnemy enemy : enemies) {
                 enemy.move(delta);
             }
             for (GOBullet bullet : bullets) {
@@ -102,10 +116,10 @@ public class Game {
     }
 
     private void checkForCollisions() {
-        for (LOFormationEnemy enemy : enemies){
+        for (LOEnemy enemy : enemies){
             for (GOBullet bullet : bullets){
                 if (bullet.collidesWith(enemy)) {
-                    bullet.bulletHitsEnemy(enemy);
+                    bullet.bulletHits(enemy);
                 }
                 if (enemy.isDead()){
                     if (!removeEnemies.contains(enemy)) {
@@ -120,7 +134,10 @@ public class Game {
             }
 
             if(player.collidesWith(enemy)) {
-                notifyDeath();
+                player.takeDamage(1);
+                if (player.isDead()) {
+                    notifyDeath();
+                }
             }
         }
 
@@ -151,7 +168,7 @@ public class Game {
         bullets.add(bullet);
     }
 
-    public void addEnemy(LOFormationEnemy enemy){
+    public void addEnemy(EFormation enemy){
         enemies.add(enemy);
     }
 

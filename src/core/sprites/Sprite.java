@@ -21,6 +21,6 @@ public class Sprite {
     }
 
     public void draw(Graphics g, int x, int y) {
-        g.drawImage(image, x, y, null);
+        g.drawImage(image, x - image.getWidth(null) / 2, y - image.getHeight(null) / 2, null);
     }
 }

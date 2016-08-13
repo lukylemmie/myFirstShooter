@@ -1,7 +1,8 @@
 package core.gameLogic;
 
 import core.gameObjects.GOBullet;
-import core.gameObjects.LiveObjects.LOFormationEnemy;
+import core.gameObjects.LiveObjects.EFormation;
+import core.gameObjects.LiveObjects.LOEnemy;
 import core.gameObjects.LiveObjects.LOPlayer;
 
 import javax.swing.*;
@@ -73,13 +74,13 @@ public class GameView extends Canvas {
 
 
 
-    public void drawGameObjects(LOPlayer player, ArrayList<LOFormationEnemy> enemies, ArrayList<GOBullet> bullets) {
+    public void drawGameObjects(LOPlayer player, ArrayList<LOEnemy> enemies, ArrayList<GOBullet> bullets) {
         Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
         g.setColor(Color.black);
         g.fillRect(0, 0, Game.MAX_X, Game.MAX_Y);
 
         player.draw(g);
-        for (LOFormationEnemy enemy : enemies){
+        for (LOEnemy enemy : enemies){
             enemy.draw(g);
         }
         for (GOBullet bullet : bullets){

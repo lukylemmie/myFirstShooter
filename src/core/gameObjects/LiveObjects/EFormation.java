@@ -7,13 +7,13 @@ import core.gameObjects.GOLiveObject;
 /**
  * @author Andrew Lem
  */
-public class LOFormationEnemy extends LOEnemy {
+public class EFormation extends LOEnemy {
     public static final double DEFAULT_ENEMY_MOVE_SPEED_INCREASE = 1.03;
 
     private EnemyFormation enemyFormation;
 
-    public LOFormationEnemy(Game game, int x, int y, EnemyFormation enemyFormation) {
-        super(game, SPRITES_ENEMY_GIF, x, y, DEFAULT_ENEMY_HP);
+    public EFormation(Game game, int x, int y, EnemyFormation enemyFormation) {
+        super(game, x, y, DEFAULT_ENEMY_HP);
 
         speed = DEFAULT_ENEMY_MOVE_SPEED;
         dx = -speed;

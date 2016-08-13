@@ -41,9 +41,7 @@ public abstract class GOLiveObject extends GameObject {
         }
 
         lastActionTime = System.currentTimeMillis();
-        GOBullet bullet = new GOBullet(game, getX() + getImageWidth()/2, getY() + getImageWidth()/2, this);
-        bullet.adjustX(-bullet.getImageWidth()/2);
-        bullet.adjustY(-bullet.getImageHeight()/2);
+        GOBullet bullet = new GOBullet(game, getX(), getY(), this);
         bullet.setBearing(bearing);
         bullet.calcVelocity();
         game.addBullet(bullet);

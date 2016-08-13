@@ -1,7 +1,7 @@
 package core.gameObjects;
 
 import core.gameLogic.Game;
-import core.gameObjects.LiveObjects.LOFormationEnemy;
+import core.gameObjects.LiveObjects.EFormation;
 import core.gameObjects.LiveObjects.LOPlayer;
 import core.sprites.SpriteStore;
 
@@ -21,7 +21,7 @@ public class GOBullet extends GameObject {
         super(game, SPRITES_NEUTRAL_BULLET_GIF, x, y);
         if (owner instanceof LOPlayer){
             sprite = SpriteStore.get().getSprite(SPRITES_PLAYER_BULLET_GIF);
-        } else if (owner instanceof LOFormationEnemy) {
+        } else if (owner instanceof EFormation) {
             sprite = SpriteStore.get().getSprite(SPRITES_ENEMY_BULLET_GIF);
 
         }
@@ -30,10 +30,10 @@ public class GOBullet extends GameObject {
         this.owner = owner;
     }
 
-    public void bulletHitsEnemy(LOFormationEnemy enemy){
+    public void bulletHits(GOLiveObject target){
         // prevents double kills, if we've already hit something, don't collide
         if (!isUsed()) {
-            enemy.takeDamage(1);
+            target.takeDamage(1);
             uses--;
         }
     }
