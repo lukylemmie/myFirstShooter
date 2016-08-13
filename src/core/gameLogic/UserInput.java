@@ -108,9 +108,11 @@ public class UserInput {
             if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
                 leftPressed = true;
             }
+
             if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
                 rightPressed = true;
             }
+
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                 firePressed = true;
             }
@@ -121,12 +123,22 @@ public class UserInput {
                 return;
             }
 
-            if (e.getKeyCode() == KeyEvent.VK_A) {
+            if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W){
+                upPressed = false;
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S){
+                downPressed = false;
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
                 leftPressed = false;
             }
-            if (e.getKeyCode() == KeyEvent.VK_D) {
+
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
                 rightPressed = false;
             }
+
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                 firePressed = false;
             }
