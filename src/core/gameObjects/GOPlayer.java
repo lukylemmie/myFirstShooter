@@ -54,8 +54,8 @@ public class GOPlayer extends GameObject {
         GOBullet bullet = new GOBullet(game, getX() + getImageWidth()/2, getY() + getImageWidth()/2);
         bullet.adjustX(-bullet.getImageWidth()/2);
         bullet.adjustY(-bullet.getImageHeight()/2);
-        bullet.setDirection(direction);
-        bullet.recalcVelocity();
+        bullet.setBearing(bearing);
+        bullet.calcVelocity();
         game.addBullet(bullet);
     }
 }

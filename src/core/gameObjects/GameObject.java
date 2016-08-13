@@ -19,7 +19,7 @@ public abstract class GameObject {
     protected double dx;
     protected double dy;
     protected Game game;
-    protected double direction;
+    protected double bearing;
 
     private Rectangle me = new Rectangle();
     private Rectangle him = new Rectangle();
@@ -58,7 +58,7 @@ public abstract class GameObject {
 
     public void draw(Graphics2D g) {
         AffineTransform gameDirection = g.getTransform();
-        g.rotate(direction, x + sprite.getWidth()/2, y + sprite.getHeight()/2);
+        g.rotate(bearing, x + sprite.getWidth()/2, y + sprite.getHeight()/2);
         sprite.draw(g, (int) x, (int) y);
         g.setTransform(gameDirection);
     }
@@ -99,19 +99,19 @@ public abstract class GameObject {
         double deltaX = pX - x;
         double deltaY = pY - y;
 
-        direction = Math.atan2(deltaY, deltaX) + DIRECTION_CORRECTION;
+        bearing = Math.atan2(deltaY, deltaX) + DIRECTION_CORRECTION;
     }
 
-    public double getDirection() {
-        return direction;
+    public double getBearing() {
+        return bearing;
     }
 
-    public void setDirection(double direction) {
-        this.direction = direction;
+    public void setBearing(double bearing) {
+        this.bearing = bearing;
     }
 
-    public void recalcVelocity(){
-        dx = speed * Math.cos(direction + DIRECTION_CORRECTION);
-        dy = speed * Math.sin(direction + DIRECTION_CORRECTION);
+    public void calcVelocity(){
+        dx = speed * Math.cos(bearing + DIRECTION_CORRECTION);
+        dy = speed * Math.sin(bearing + DIRECTION_CORRECTION);
     }
 }

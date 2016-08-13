@@ -25,8 +25,8 @@ public class Game {
     private GOPlayer player;
     private UserInput userInput;
     private GameView gameView;
-    private boolean mouseControls = false;
-    private boolean keyboardControls = true;
+    private boolean mouseControls = true;
+    private boolean keyboardControls = false;
 
     public Game() {
         userInput = new UserInput(this);
@@ -43,7 +43,7 @@ public class Game {
         bullets.clear();
 
         player = new GOPlayer(this, MAX_X / 2, MAX_Y - SCREEN_EDGE_INNER_BUFFER);
-        enemyFormation = new EnemyFormation(this, 1);
+//        enemyFormation = new EnemyFormation(this, 1);
     }
 
 
