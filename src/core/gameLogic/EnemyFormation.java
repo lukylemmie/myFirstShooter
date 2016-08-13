@@ -1,6 +1,6 @@
 package core.gameLogic;
 
-import core.gameObjects.GOEnemy;
+import core.gameObjects.LiveObjects.LOFormationEnemy;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ public class EnemyFormation {
     public static final int DEFAULT_ENEMY_TOP_EDGE_Y = 50;
 
     private Game game;
-    private ArrayList<GOEnemy> enemies = new ArrayList<>();
+    private ArrayList<LOFormationEnemy> enemies = new ArrayList<>();
     private long directionChangeTime = 0;
 
     public EnemyFormation(Game game, int level){
@@ -25,7 +25,7 @@ public class EnemyFormation {
         // create a block of enemies (5 rows, by 12 enemies, spaced evenly)
         for (int row = 0; row < DEFAULT_ENEMIES_ROWS; row++) {
             for (int x = 0; x < DEFAULT_ENEMIES_PER_ROW; x++) {
-                GOEnemy enemy = new GOEnemy(game,
+                LOFormationEnemy enemy = new LOFormationEnemy(game,
                         DEFAULT_ENEMY_LEFT_EDGE_X + (x * DEFAULT_ENEMY_GAP_X),
                         DEFAULT_ENEMY_TOP_EDGE_Y + row * DEFAULT_ENEMY_GAP_Y,
                         this);
@@ -35,7 +35,7 @@ public class EnemyFormation {
         }
     }
 
-    public void remove(GOEnemy enemy) {
+    public void remove(LOFormationEnemy enemy) {
         enemies.remove(enemy);
     }
 
@@ -44,7 +44,7 @@ public class EnemyFormation {
     }
 
     public void increaseMovementSpeed() {
-        for(GOEnemy enemy : enemies){
+        for(LOFormationEnemy enemy : enemies){
             enemy.increaseMovementSpeed();
         }
     }
@@ -53,7 +53,7 @@ public class EnemyFormation {
         if(directionChangeTime != game.getLastLoopTime()){
             directionChangeTime = game.getLastLoopTime();
 
-            for(GOEnemy enemy : enemies){
+            for(LOFormationEnemy enemy : enemies){
                 enemy.advance();
             }
         }

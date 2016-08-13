@@ -11,7 +11,6 @@ import java.awt.geom.AffineTransform;
  * @author Andrew Lem
  */
 public abstract class GameObject {
-    public static final double DIRECTION_CORRECTION = Math.toRadians(90);
     protected double x;
     protected double y;
     protected Sprite sprite;
@@ -40,19 +39,24 @@ public abstract class GameObject {
     public int getX() {
         return (int) x;
     }
+
     public int getY() {
         return (int) y;
     }
-    public double getHorizontalMovement() {
+
+    public double getDx() {
         return dx;
     }
-    public void setHorizontalMovement(double dx) {
+
+    public void setDx(double dx) {
         this.dx = dx;
     }
-    public double getVerticalMovement() {
+
+    public double getDy() {
         return dy;
     }
-    public void setVerticalMovement(double dy) {
+
+    public void setDy(double dy) {
         this.dy = dy;
     }
 
@@ -100,7 +104,7 @@ public abstract class GameObject {
         double deltaY = pY - (y + getImageHeight()/2);
 
         if (Math.abs(deltaX) > 1 && Math.abs(deltaY) > 1) {
-            bearing = Math.atan2(deltaY, deltaX) + DIRECTION_CORRECTION;
+            bearing = Math.atan2(deltaX,-deltaY);
         }
     }
 
@@ -113,8 +117,8 @@ public abstract class GameObject {
     }
 
     public void calcVelocity(){
-        dx = speed * -Math.cos(bearing + DIRECTION_CORRECTION);
-        dy = speed * -Math.sin(bearing + DIRECTION_CORRECTION);
+        dx = speed * Math.sin(bearing);
+        dy = -speed * Math.cos(bearing);
     }
 
     public double distanceTo(double pX, double pY){

@@ -1,21 +1,19 @@
-package core.gameObjects;
+package core.gameObjects.LiveObjects;
 
 import core.gameLogic.EnemyFormation;
 import core.gameLogic.Game;
+import core.gameObjects.GOLiveObject;
 
 /**
  * @author Andrew Lem
  */
-public class GOEnemy extends GameObject {
-    public static final String SPRITES_ENEMY_GIF = "sprites/enemy.gif";
-    public static final int DEFAULT_ENEMY_MOVE_SPEED = 75;
+public class LOFormationEnemy extends LOEnemy {
     public static final double DEFAULT_ENEMY_MOVE_SPEED_INCREASE = 1.03;
 
     private EnemyFormation enemyFormation;
-    private int hp = 1;
 
-    public GOEnemy(Game game, int x, int y, EnemyFormation enemyFormation) {
-        super(game, SPRITES_ENEMY_GIF, x, y);
+    public LOFormationEnemy(Game game, int x, int y, EnemyFormation enemyFormation) {
+        super(game, SPRITES_ENEMY_GIF, x, y, DEFAULT_ENEMY_HP);
 
         speed = DEFAULT_ENEMY_MOVE_SPEED;
         dx = -speed;
@@ -31,13 +29,8 @@ public class GOEnemy extends GameObject {
         super.move(delta);
     }
 
-    //TODO refactor
-    public void collidedWith(GameObject other) {
-        // collisions with enemies are handled elsewhere
-    }
-
     public void increaseMovementSpeed() {
-        setHorizontalMovement(getHorizontalMovement() * DEFAULT_ENEMY_MOVE_SPEED_INCREASE);
+        setDx(getDx() * DEFAULT_ENEMY_MOVE_SPEED_INCREASE);
     }
 
     public void advance() {
@@ -47,13 +40,5 @@ public class GOEnemy extends GameObject {
         if (y > Game.MAX_Y - Game.SCREEN_EDGE_INNER_BUFFER) {
             game.notifyDeath();
         }
-    }
-
-    public void takeDamage(int damage){
-        hp -= damage;
-    }
-
-    public boolean isDead(){
-        return hp <= 0;
     }
 }

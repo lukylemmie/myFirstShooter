@@ -1,8 +1,8 @@
 package core.gameLogic;
 
 import core.gameObjects.GOBullet;
-import core.gameObjects.GOEnemy;
-import core.gameObjects.GOPlayer;
+import core.gameObjects.LiveObjects.LOFormationEnemy;
+import core.gameObjects.LiveObjects.LOPlayer;
 
 import java.util.ArrayList;
 
@@ -18,16 +18,13 @@ public class Game {
 
     private boolean gameRunning = true;
     private long lastLoopTime = System.currentTimeMillis();
-    private ArrayList<GOEnemy> enemies = new ArrayList<>();
-    private ArrayList<GOEnemy> removeEnemies = new ArrayList<>();
+    private ArrayList<LOFormationEnemy> enemies = new ArrayList<>();
+    private ArrayList<LOFormationEnemy> removeEnemies = new ArrayList<>();
     private ArrayList<GOBullet> bullets = new ArrayList<>();
     private ArrayList<GOBullet> removeBullets = new ArrayList<>();
-    private EnemyFormation enemyFormation;
-    private GOPlayer player;
+    private LOPlayer player;
     private UserInput userInput;
     private GameView gameView;
-    private boolean mouseControls = true;
-    private boolean keyboardControls = false;
 
     public Game() {
         userInput = new UserInput(this);
@@ -43,8 +40,7 @@ public class Game {
         enemies.clear();
         bullets.clear();
 
-        player = new GOPlayer(this, MAX_X / 2, MAX_Y - SCREEN_EDGE_INNER_BUFFER);
-//        enemyFormation = new EnemyFormation(this, 1);
+        player = new LOPlayer(this, MAX_X / 2, MAX_Y / 2);
     }
 
 
@@ -70,7 +66,7 @@ public class Game {
 
         if (!userInput.isWaitingForKeyPress()) {
             player.move(delta);
-            for (GOEnemy enemy : enemies) {
+            for (LOFormationEnemy enemy : enemies) {
                 enemy.move(delta);
             }
             for (GOBullet bullet : bullets) {
@@ -106,7 +102,7 @@ public class Game {
     }
 
     private void checkForCollisions() {
-        for (GOEnemy enemy : enemies){
+        for (LOFormationEnemy enemy : enemies){
             for (GOBullet bullet : bullets){
                 if (bullet.collidesWith(enemy)) {
                     bullet.bulletHitsEnemy(enemy);
@@ -129,10 +125,6 @@ public class Game {
         }
 
         enemies.removeAll(removeEnemies);
-        for (GOEnemy enemy : removeEnemies){
-            enemyFormation.remove(enemy);
-            notifyEnemyKilled();
-        }
         removeEnemies.clear();
         bullets.removeAll(removeBullets);
         removeBullets.clear();
@@ -149,10 +141,6 @@ public class Game {
     }
 
     public void notifyEnemyKilled() {
-        if (enemyFormation.isEmpty()) {
-            notifyWin();
-        }
-        enemyFormation.increaseMovementSpeed();
     }
 
     public long getLastLoopTime() {
@@ -163,7 +151,8 @@ public class Game {
         bullets.add(bullet);
     }
 
-    public void addEnemy(GOEnemy enemy){
+    public void addEnemy(LOFormationEnemy enemy){
         enemies.add(enemy);
     }
+
 }
