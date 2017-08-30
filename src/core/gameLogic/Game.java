@@ -3,6 +3,7 @@ package core.gameLogic;
 import core.gameObjects.GOBullet;
 import core.gameObjects.LiveObjects.EnemyObjects.EChaser;
 import core.gameObjects.LiveObjects.EnemyObjects.EFormation;
+import core.gameObjects.LiveObjects.EnemyObjects.EPattern;
 import core.gameObjects.LiveObjects.EnemyObjects.EShooter;
 import core.gameObjects.LiveObjects.LOEnemy;
 import core.gameObjects.LiveObjects.LOPlayer;
@@ -17,7 +18,7 @@ public class Game {
     public static final int MAX_Y = 600;
     public static final int SCREEN_EDGE_INNER_BUFFER = 50;
     public static final int SCREEN_EDGE_OUTER_BUFFER = 100;
-    public static final int MOVEMENT_BUFFER = 1;
+    public static final Double MOVEMENT_BUFFER = 1.0;
 
     private boolean gameRunning = true;
     private long lastLoopTime = System.currentTimeMillis();
@@ -43,26 +44,30 @@ public class Game {
         enemies.clear();
         bullets.clear();
 
-        player = new LOPlayer(this, MAX_X / 2, MAX_Y / 2);
-        LOEnemy enemy1 = new EChaser(this, -SCREEN_EDGE_OUTER_BUFFER, -SCREEN_EDGE_OUTER_BUFFER, 1);
-        LOEnemy enemy2 = new EChaser(this, MAX_X + SCREEN_EDGE_OUTER_BUFFER, -SCREEN_EDGE_OUTER_BUFFER, 1);
-        LOEnemy enemy3 = new EChaser(this, -SCREEN_EDGE_OUTER_BUFFER, MAX_Y + SCREEN_EDGE_OUTER_BUFFER, 1);
-        LOEnemy enemy4 = new EChaser(this, MAX_X + SCREEN_EDGE_OUTER_BUFFER, MAX_Y + SCREEN_EDGE_OUTER_BUFFER, 1);
+        player = new LOPlayer(this, (double) MAX_X / 2, (double) MAX_Y / 2);
 
-        enemies.add(enemy1);
-        enemies.add(enemy2);
-        enemies.add(enemy3);
-        enemies.add(enemy4);
+        LOEnemy enemy = new EPattern(this, 0.0, 0.0, 20.0);
+        enemies.add(enemy);
 
-        enemy1 = new EShooter(this, SCREEN_EDGE_INNER_BUFFER, SCREEN_EDGE_INNER_BUFFER, 1);
-        enemy2 = new EShooter(this, MAX_X - SCREEN_EDGE_INNER_BUFFER, SCREEN_EDGE_INNER_BUFFER, 1);
-        enemy3 = new EShooter(this, SCREEN_EDGE_INNER_BUFFER, MAX_Y - SCREEN_EDGE_INNER_BUFFER, 1);
-        enemy4 = new EShooter(this, MAX_X - SCREEN_EDGE_INNER_BUFFER, MAX_Y - SCREEN_EDGE_INNER_BUFFER, 1);
-
-        enemies.add(enemy1);
-        enemies.add(enemy2);
-        enemies.add(enemy3);
-        enemies.add(enemy4);
+//        LOEnemy enemy1 = new EChaser(this, -SCREEN_EDGE_OUTER_BUFFER, -SCREEN_EDGE_OUTER_BUFFER, 1);
+//        LOEnemy enemy2 = new EChaser(this, MAX_X + SCREEN_EDGE_OUTER_BUFFER, -SCREEN_EDGE_OUTER_BUFFER, 1);
+//        LOEnemy enemy3 = new EChaser(this, -SCREEN_EDGE_OUTER_BUFFER, MAX_Y + SCREEN_EDGE_OUTER_BUFFER, 1);
+//        LOEnemy enemy4 = new EChaser(this, MAX_X + SCREEN_EDGE_OUTER_BUFFER, MAX_Y + SCREEN_EDGE_OUTER_BUFFER, 1);
+//
+//        enemies.add(enemy1);
+//        enemies.add(enemy2);
+//        enemies.add(enemy3);
+//        enemies.add(enemy4);
+//
+//        enemy1 = new EShooter(this, SCREEN_EDGE_INNER_BUFFER, SCREEN_EDGE_INNER_BUFFER, 1);
+//        enemy2 = new EShooter(this, MAX_X - SCREEN_EDGE_INNER_BUFFER, SCREEN_EDGE_INNER_BUFFER, 1);
+//        enemy3 = new EShooter(this, SCREEN_EDGE_INNER_BUFFER, MAX_Y - SCREEN_EDGE_INNER_BUFFER, 1);
+//        enemy4 = new EShooter(this, MAX_X - SCREEN_EDGE_INNER_BUFFER, MAX_Y - SCREEN_EDGE_INNER_BUFFER, 1);
+//
+//        enemies.add(enemy1);
+//        enemies.add(enemy2);
+//        enemies.add(enemy3);
+//        enemies.add(enemy4);
     }
 
 
@@ -90,6 +95,9 @@ public class Game {
             }
             if (enemy instanceof EShooter){
                 ((EShooter) enemy).shootAt(player.getX(), player.getY());
+            }
+            if (enemy instanceof EPattern){
+                ((EPattern) enemy).goToNextPoint();
             }
         }
     }
@@ -122,13 +130,43 @@ public class Game {
     }
 
     private void processUserInput() {
+//        player.turnToLookAt(userInput.getMouseX(), userInput.getMouseY());
+
+        Boolean stop = false;
+
+        if(userInput.isUpPressed() && userInput.isRightPressed()){
+            player.setBearing(Math.PI/4);
+        } else if(userInput.isUpPressed() && userInput.isLeftPressed()){
+            player.setBearing(Math.PI*7/4);
+        } else if(userInput.isDownPressed() && userInput.isRightPressed()){
+            player.setBearing(Math.PI*3/4);
+        } else if(userInput.isDownPressed() && userInput.isLeftPressed()){
+            player.setBearing(Math.PI*5/4);
+        } else if(userInput.isUpPressed()){
+            player.setBearing(0);
+        } else if(userInput.isDownPressed()){
+            player.setBearing(Math.PI);
+        } else if(userInput.isLeftPressed() ){
+            player.setBearing(Math.PI*3/2);
+        } else if(userInput.isRightPressed()){
+            player.setBearing(Math.PI/2);
+        } else {
+            stop = true;
+        }
+
+        if(stop){
+            player.stopMoving();
+        } else {
+            player.calcVelocity();
+        }
+
         player.turnToLookAt(userInput.getMouseX(), userInput.getMouseY());
 
-        if (player.distanceTo(userInput.getMouseX(), userInput.getMouseY()) > MOVEMENT_BUFFER){
-            player.calcVelocity();
-        } else {
-            player.stopMoving();
-        }
+//        if (player.distanceTo(userInput.getMouseX(), userInput.getMouseY()) > MOVEMENT_BUFFER){
+//            player.calcVelocity();
+//        } else {
+//            player.stopMoving();
+//        }
 
         if (userInput.isMouseClick()){
             player.tryToFire();
@@ -152,8 +190,8 @@ public class Game {
             }
 
             if(player.collidesWith(enemy)) {
-                player.takeDamage(1);
-                enemy.takeDamage(1);
+                player.takeDamage(1.0);
+                enemy.takeDamage(1.0);
             }
             if (enemy.isDead()){
                 if (!removeEnemies.contains(enemy)) {

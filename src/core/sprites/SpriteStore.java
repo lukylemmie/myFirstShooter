@@ -42,16 +42,16 @@ public class SpriteStore {
         } catch (IOException e) {
             fail("Failed to load: " + ref);
         }
-
-        // create an accelerated image of the right size to store our sprite in
-        GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
-        Image image = gc.createCompatibleImage(sourceImage.getWidth(), sourceImage.getHeight(), Transparency.BITMASK);
-
-        // draw our source image into the accelerated image
-        image.getGraphics().drawImage(sourceImage, 0, 0, null);
+//
+//        // create an accelerated image of the right size to store our sprite in
+//        GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+//        Image image = gc.createCompatibleImage(sourceImage.getWidth(), sourceImage.getHeight(), Transparency.BITMASK);
+//
+//        // draw our source image into the accelerated image
+//        image.getGraphics().drawImage(sourceImage, 0, 0, null);
 
         // create a sprite, add it the cache then return it
-        Sprite sprite = new Sprite(image);
+        Sprite sprite = new Sprite(sourceImage);
         sprites.put(ref, sprite);
 
         return sprite;

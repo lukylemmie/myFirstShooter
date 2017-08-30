@@ -79,8 +79,10 @@ public class GameView extends Canvas {
         g.fillRect(0, 0, Game.MAX_X, Game.MAX_Y);
 
         player.draw(g);
+        player.drawHP(g);
         for (LOEnemy enemy : enemies){
             enemy.draw(g);
+            enemy.drawHP(g);
         }
         for (GOBullet bullet : bullets){
             bullet.draw(g);

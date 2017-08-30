@@ -13,7 +13,7 @@ public class EFormation extends LOEnemy {
 
     private EnemyFormation enemyFormation;
 
-    public EFormation(Game game, int x, int y, EnemyFormation enemyFormation) {
+    public EFormation(Game game, Double x, Double y, EnemyFormation enemyFormation) {
         super(game, x, y, DEFAULT_ENEMY_HP);
 
         speed = DEFAULT_ENEMY_MOVE_SPEED;

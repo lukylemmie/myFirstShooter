@@ -1,26 +1,31 @@
 package core.sprites;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * @author Andrew Lem
  */
 public class Sprite {
-    private Image image;
+    private BufferedImage image;
 
-    public Sprite(Image image) {
+    public Sprite(BufferedImage image) {
         this.image = image;
     }
 
-    public int getWidth() {
-        return image.getWidth(null);
+    public Double getWidth() {
+        return (double) image.getWidth(null);
     }
 
-    public int getHeight() {
-        return image.getHeight(null);
+    public Double getHeight() {
+        return (double) image.getHeight(null);
     }
 
-    public void draw(Graphics g, int x, int y) {
-        g.drawImage(image, x - image.getWidth(null) / 2, y - image.getHeight(null) / 2, null);
+    public void draw(Graphics g, Double x, Double y) {
+        g.drawImage(image, x.intValue() - image.getWidth(null) / 2, y.intValue() - image.getHeight(null) / 2, null);
+    }
+
+    public BufferedImage getImage() {
+        return image;
     }
 }

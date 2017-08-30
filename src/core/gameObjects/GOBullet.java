@@ -10,15 +10,15 @@ import core.sprites.SpriteStore;
  * @author Andrew Lem
  */
 public class GOBullet extends GameObject {
-    public static final int DEFAULT_BULLET_MOVE_SPEED = 300;
+    public static final Double DEFAULT_BULLET_MOVE_SPEED = 300.0;
     public static final String SPRITES_NEUTRAL_BULLET_GIF = "sprites/neutralBullet.gif";
     public static final String SPRITES_PLAYER_BULLET_GIF = "sprites/playerBullet.gif";
     public static final String SPRITES_ENEMY_BULLET_GIF = "sprites/enemyBullet.gif";
 
-    private int uses = 1;
+    private Double uses = 1.0;
     private GameObject owner;
 
-    public GOBullet(Game game, int x, int y, GameObject owner) {
+    public GOBullet(Game game, Double x, Double y, GameObject owner) {
         super(game, SPRITES_NEUTRAL_BULLET_GIF, x, y);
         if (owner instanceof LOPlayer){
             sprite = SpriteStore.get().getSprite(SPRITES_PLAYER_BULLET_GIF);
@@ -43,7 +43,7 @@ public class GOBullet extends GameObject {
 
         // prevents double kills, if we've already hit something, don't collide
         if (!isUsed()) {
-            target.takeDamage(1);
+            target.takeDamage(1.0);
             uses--;
         }
     }

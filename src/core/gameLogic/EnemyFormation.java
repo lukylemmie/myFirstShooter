@@ -10,10 +10,10 @@ import java.util.ArrayList;
 public class EnemyFormation {
     public static final int DEFAULT_ENEMIES_PER_ROW = 12;
     public static final int DEFAULT_ENEMIES_ROWS = 5;
-    public static final int DEFAULT_ENEMY_LEFT_EDGE_X = 100;
-    public static final int DEFAULT_ENEMY_GAP_X = 50;
-    public static final int DEFAULT_ENEMY_GAP_Y = 30;
-    public static final int DEFAULT_ENEMY_TOP_EDGE_Y = 50;
+    public static final Double DEFAULT_ENEMY_LEFT_EDGE_X = 100.0;
+    public static final Double DEFAULT_ENEMY_GAP_X = 50.0;
+    public static final Double DEFAULT_ENEMY_GAP_Y = 30.0;
+    public static final Double DEFAULT_ENEMY_TOP_EDGE_Y = 50.0;
 
     private Game game;
     private ArrayList<EFormation> enemies = new ArrayList<>();
